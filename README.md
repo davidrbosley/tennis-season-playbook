@@ -1,6 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tennis Season Playbook
+
+This project will help plan a high school tennis season from year to year. It will allow breaking the season down into periods with goals, plan daily practices, track matches, and track players.
+
+## Planned Tools
+
+- [Next.js](https://nextjs.org/) bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+- TypeScript
+- [Playwright](https://playwright.dev/) for end-to-end web app testing. [`ChatGPT BDD Plan`](https://medium.com/@vitaliypotapov/generate-bdd-tests-with-chatgpt-and-run-them-with-playwright-e1ce29d7a7bd)
 
 ## Getting Started
+
+---
 
 First, run the development server:
 

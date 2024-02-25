@@ -3,27 +3,101 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-color: #000;
+  --background-start-color: #6eaeb9;
+  --background-end-color: #536996;
+  --link-hover-color: rgb(14, 61, 27);
+  --border-radius: 5px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+} */
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: var(--foreground-color);
+
+  /* background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--foreground-start-color)
+    )
+    var(--background-end-color); */
+}
+
+.header {
+  height: 3.5rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: linear-gradient(
       to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
+      var(--background-end-color)
     )
-    rgb(var(--background-start-rgb));
+    var(--background-start-color);
+}
+
+.nav-main-list {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.nav-main-link:link,
+.nav-main-link:visited {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.nav-main-link:hover,
+.nav-main-link:active {
+  color: var(--link-hover-color);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: 100%;
+}
+
+.season-overview {
+  min-height: 400px;
+  border-radius: var(--border-radius);
+  margin: 1rem;
+  padding: 0.25rem;
+  background-color: bisque;
+}
+
+.season-card {
+  background-color: aliceblue;
+  border-radius: var(--border-radius);
+  margin: 0.5rem;
+  padding: 0.2rem;
+}
+
+.week-overview {
+  min-height: 400px;
+  border-radius: var(--border-radius);
+  margin: 1rem;
+  padding: 0.25rem;
+  background-color: rgb(80, 195, 128);
+}
+
+.footer {
+  width: 100%;
+  background-color: #6eaeb9;
 }
 
 @layer utilities {
