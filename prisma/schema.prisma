@@ -54,3 +54,44 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+
+model Team {
+  id          String @id @default(cuid())
+  name        String
+  slug        String @unique
+  description String
+  seasons       Season[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Season {
+  id      String @id @default(cuid())
+  teamId  String
+  name String
+  slug String
+  seasonStart  DateTime
+  seasonEnd DateTime
+  weeks Week[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  team     Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+}
+
+model Week {
+  id      String @id @default(cuid())
+  seasonId String
+  weekNumber Int
+  slug String
+  weekStart  DateTime
+  weekEnd DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  season     Season      @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+}
