@@ -75,6 +75,8 @@ model Season {
   seasonStart  DateTime
   seasonEnd DateTime
   weeks Week[]
+  matches Match[]
+  practices Practice[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -88,7 +90,32 @@ model Week {
   weekNumber Int
   slug String
   weekStart  DateTime
-  weekEnd DateTime
+  weekEnd  DateTime
+  goals String  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  season     Season      @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+}
+
+model Match {
+  id      String @id @default(cuid())
+  seasonId String
+  dayDate  DateTime
+  opponent String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  season     Season      @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+}
+
+model Practice {
+  id      String @id @default(cuid())
+  seasonId String
+  dayDate  DateTime
+  notes String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

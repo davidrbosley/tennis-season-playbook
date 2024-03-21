@@ -1,11 +1,12 @@
 "use server";
-import { z } from "zod";
+import { util, z } from "zod";
 import { auth } from "@/auth";
 import { Season } from "@prisma/client";
 import { db } from "@/db";
 import paths from "@/paths";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import * as utils from "@/utils";
 
 interface CreateSeasonFormState {
   errors: {
@@ -75,6 +76,56 @@ export async function createSeason(
         teamId: teamId,
       },
     });
+
+    let weekNumber = 1;
+    let weekStart = new Date(result.data.seasonStart);
+
+    // Create weeks for the season
+    while (weekStart <= result.data.seasonEnd) {
+      const weekending = utils.addDays(weekStart, 7);
+      await db.week.create({
+        data: {
+          weekNumber: weekNumber,
+          slug: `week${weekNumber}`,
+          goals: "",
+          weekStart: weekStart,
+          weekEnd: weekending,
+          seasonId: season.id,
+        },
+      });
+
+      weekStart = utils.addDays(weekStart, 7);
+      weekNumber++;
+    }
+
+    const weekendDays = [0, 6];
+    const matchDays = [2, 4];
+
+    // Create matches and practices for each day of the season
+    let day = new Date(result.data.seasonStart);
+    while (day <= result.data.seasonEnd) {
+      const dayOfWeek = day.getDay();
+      if (!weekendDays.includes(dayOfWeek)) {
+        if (matchDays.includes(dayOfWeek)) {
+          await db.match.create({
+            data: {
+              dayDate: day,
+              seasonId: season.id,
+              opponent: "",
+            },
+          });
+        } else {
+          await db.practice.create({
+            data: {
+              dayDate: day,
+              seasonId: season.id,
+              notes: "",
+            },
+          });
+        }
+      }
+      day = utils.addDays(day, 1);
+    }
   } catch (err: unknown) {
     console.log("Error creating season", err);
     return {

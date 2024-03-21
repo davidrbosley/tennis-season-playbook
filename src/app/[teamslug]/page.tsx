@@ -6,15 +6,17 @@ import { notFound } from "next/navigation";
 
 interface TeamHomePageProps {
   params: {
-    slug: string;
+    teamslug: string;
   };
 }
 
 export default async function TeamHomePage({ params }: TeamHomePageProps) {
-  const { slug } = params;
+  const { teamslug } = params;
+
+  console.log("Team Page slug", teamslug);
 
   const team = await db.team.findFirst({
-    where: { slug: slug },
+    where: { slug: teamslug },
   });
 
   if (!team) {

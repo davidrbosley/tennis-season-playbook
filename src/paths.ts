@@ -26,16 +26,19 @@ const paths = {
   teamSeasonSettings(teamSlug: string, season: string) {
     return `/${teamSlug}/${season}/settings`;
   },
+  teamSeasonDay(teamSlug: string, season: string, date: Date) {
+    const day =
+      date.getFullYear().toString() +
+      "-" +
+      date.getMonth().toString() +
+      "-" +
+      date.getDate().toString();
+
+    //console.log("Day computation", day);
+    return `/${teamSlug}/${season}/${day}`;
+  },
   teamSeasonWeek(teamSlug: string, season: string, week: string) {
     return `/${teamSlug}/${season}/${week}`;
-  },
-  teamSeasonWeekDay(
-    teamSlug: string,
-    season: string,
-    week: string,
-    day: string
-  ) {
-    return `/${teamSlug}/${season}/${week}/${day}`;
   },
   teamSeasonMatches(teamSlug: string, season: string) {
     return `/${teamSlug}/${season}/matches`;
